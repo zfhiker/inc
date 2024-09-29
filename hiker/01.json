@@ -1,5 +1,4 @@
-[
-{
+[{
     "last_chapter_rule": "js:\nlet listdata = JSON.parse(fetch(MY_URL,{headers:{\"Referer\":\"https://apk.jqkan.com/\"}})).data;\r\nlet newchapter = \"更新至: 第\" + listdata.count + \"章\";\nsetResult(newchapter);",
     "title": "老白故事",
     "author": "Moonquakes",
@@ -29,20 +28,4 @@
     "icon": "https://s1.ax1x.com/2022/04/19/L0gPIK.png",
     "proxy": ""
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 ]
