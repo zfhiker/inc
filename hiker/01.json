@@ -1,1 +1,48 @@
-11111111111
+[
+{
+    "last_chapter_rule": "js:\nlet listdata = JSON.parse(fetch(MY_URL,{headers:{\"Referer\":\"https://apk.jqkan.com/\"}})).data;\r\nlet newchapter = \"更新至: 第\" + listdata.count + \"章\";\nsetResult(newchapter);",
+    "title": "老白故事",
+    "author": "Moonquakes",
+    "url": "https://apk-lb-json.fodexin.com/json/v1/cat_list/fyAll/index/fypage.json;get;utf-8;{referer@https://apk.jqkan.com/&&User-Agent@laobai_tv/1.1.2}",
+    "version": 0,
+    "col_type": "movie_3",
+    "class_name": "有声小说：恐怖惊悚&奇幻玄幻&武侠小说&言情通俗&有声文学&人物实记&官场商战&刑侦反腐&历史军事&百家讲坛",
+    "type": "music",
+    "class_url": "14&46&11&17&10&18&17&16&15&9",
+    "area_name": "评书：单田芳&刘兰芳&田连元&袁阔成&连丽如&孙一&王子封臣&马长辉&昊儒书场&王军&王玥波&石连君&粤语评书&关永超&张少佐&田战义&其他评书",
+    "area_url": "1&2&3&4&5&8&30&25&26&27&28&29&12&35&6&7&13",
+    "sort_name": "",
+    "year_name": "综合：童话寓言&教育培训&亲子教育&商业财经&脱口秀&戏曲&头条&综艺娱乐&健康养生&二人转&广播剧&汽车音乐&英文读物&相声小品&时尚生活",
+    "sort_url": "",
+    "year_url": "20&44&43&42&41&38&40&34&33&31&36&23&22&21&45",
+    "find_rule": "js:\nvar d = [];\n\nvar list = JSON.parse(getResCode()).data.books;\n//log(list)\nfor (var i in list) {\n    d.push({\n        title: list[i].name,\n        desc: list[i].count,\n        pic_url: 'https://pic.iiszg.com/'+list[i].pic,\n        url: 'https://apk-lb-json.fodexin.com/json/v1/cont/'+list[i].book_id+'.json',\n        col_type: 'movie_3'\n    });\n}\n\nsetResult(d);",
+    "search_url": "hiker://empty##**##fypage",
+    "group": "#听书",
+    "searchFind": "js:\nvar d = [];\nMY_URL = MY_URL.split(\"##\");\nlet keyword = MY_URL[1];\n//log(keyword)\nlet PUBLIC_KEY = \"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuTx7ONxN0Ghy55NdLbjSC7yz9Pv1f7XvSCQcjd1P+Pkd2Y6tzpEcyfzEvPgVPp/Co0/YR9zRQYrd/kPg0VXcU4Zn2L5gCI3OiJXdE/kSHEPot+0NVUG1hKnoKrF5ZpL4qKm06L1n/YuF8+6eaWiHEZF/fiZsRgAOJkqJEo9KF+dngDnw5lCdUjzceFvC86OuZwIG0vPIviju3NudeIp3qAzu4A5arZ6otA052cf6u5vJhUmAI/TSssmLiqfhy/NDucPGy2wBXN1YsjF8utVgHnfpiCh5oiVOcLrhvW3rD6Jdh1BohtbycnyJ9SPOgcl9Sms2O4bg8zAM/FsiuGyJ3wIDAQAB\";\n//var str2 = \"我的\";\n//var json = {\"road\": \"search\",str2:\"我的\", \"app_version\":\"1.1.2\"}\nvar json = {\n    \"road\": \"search\",\n    \"keyword\": keyword,\n    \"app_version\": \"1.1.2\"\n}\nvar str = JSON.stringify(json);\nlet data1 = rsaEncrypt(str, PUBLIC_KEY)\n//log(data1)\nlet seahtml = fetch(\"https://apk-lb-play.fodexin.com/?a=api\", {\n    headers: {\n        \"Referer\": \"https://apk.jqkan.com/\"\n    },\n    body: \"param=\" + data1,\n    method: 'POST'\n});\n//let seajson = JSON.parse(seahtml);\nvar list = JSON.parse(seahtml).data.books;\n//log(list)\nfor (var i in list) {\n    d.push({\n        title: list[i].name,\n        desc:\"状态:\"+list[i].status+\" 共:\"+list[i].count+\" 讲述人:\"+list[i].teller+\"类型:\"+list[i].type,\n        pic_url: 'https://pic.iiszg.com/'+list[i].pic,\n        url: 'https://apk-lb-json.fodexin.com/json/v1/cont/'+list[i].book_id+'.json',\n        content: list[i].synopsis,\n        col_type: 'movie_3'\n    });\n}\nsetResult(d)",
+    "detail_col_type": "movie_1",
+    "detail_find_rule": "js:\nvar d = [];\r\nvar x = JSON.parse(fetch(MY_URL,{headers:{\"Referer\":\"https://apk.jqkan.com/\"}})).data;\r\nvar book_id = x.book_id;\r\n//log(book_id)\r\nd.push({\r\n    title: x.name+\"\\n讲述者: \"+x.teller,\r\n    desc: \"类型: \"+x.type+\"\\n更新状态: \"+x.status+\"\\n更新至: 第\"+x.count+\"章\",\r\n    pic_url: 'https://pic.iiszg.com/' + x.pic,\n    url: 'https://pic.iiszg.com/' + x.pic,\r\n    col_type: 'movie_1_vertical_pic'\r\n});\nlet texts=x.synopsis;\nd.push({\n    title:'‘‘’’<font color=\"#098AC1\">剧情简介</font>',\n    desc:texts.substr(0, 55)+'‘‘’’<small><font color=\"red\">详情</font></small></small>',\n    col_type:'text_1',\n    extra:{\n        lineVisible: false\n    },\n    url:$().rule((text)=>{\n        setResult([{\n            title:text,\n            col_type:'long_text',\n        }])\n    },texts)\n});\r\neval(JSON.parse(request('hiker://page/lazy')).rule);\r\nvar list = x.play_data;\r\n//log(list)\r\nfor (i = 0; i < list.length; i++) {\r\n    d.push({\r\n        title: list[i].name.replace(/《.*?》/g, \"\"),\r\n        url: \"hiker://empty##\" + book_id + \"#\" + list[i].play_id + lazy,\n        extra:{\n            id:book_id + \"#\" + list[i].play_id\n        },\r\n        col_type: 'text_2'\r\n    });\r\n}\r\nsetResult(d);",
+    "sdetail_col_type": "movie_1",
+    "sdetail_find_rule": "*",
+    "ua": "mobile",
+    "preRule": "",
+    "pages": "[{\"col_type\":\"movie_3\",\"name\":\"解析\",\"path\":\"lazy\",\"rule\":\"var lazy = $(\\\"\\\").lazyRule(() => {\\n    let PUBLIC_KEY = \\\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtSwotbu7UEonUCzCsJXPSpYOrkuMnpyk24PBQskkcwYZsUTwbh8Y9vHuPIerh3AfZZ1luFV9yPC282xiNX+/+IAzWHWG6M+dWmJnDyybeUVTh7H7YVM31eSR9TFT4VASr7NftgCv7hfS2mVNL0sxRrMSPSXa6SbjkIeW4GTpYpWKehKfaqrgDwVfFCu67ogL9JLIdDxvWthIe42uUMnz4II1/pdrPtWRu0CDjaxvsLz26UdMGSL3gFEloaJhp4KuIPK4RlIx+9t28H00+3IpeVirmiayDYJQe1cjiDKoERSkLubJRD2yj5X3trGmgXex3QkcRtx5UNXYkLEuEMNGiwIDAQAB\\\"\\n    input = input.split(\\\"##\\\")[1]\\n    let playid = input.split(\\\"#\\\");\\n    //log(playid[0])\\n    //log(playid[1])\\n    var t = new Date()/1000;\\n    t = (t - t % 60).toString();\\n//log(t)\\n    var json = {\\n        \\\"m\\\": \\\"play\\\",\\n        \\\"t\\\": md5(md5(\\\"play\\\"+playid[0]+playid[1])+\\\"1449682949\\\"+t),\\n        \\\"aid\\\": playid[0],\\n        \\\"pid\\\": playid[1]\\n    }\\n    //log(json)\\n    var str = JSON.stringify(json);\\n    let data = rsaEncrypt(str, PUBLIC_KEY)\\n    //log(data)\\n    let html = fetch(\\\"https://apk-lb-play.fodexin.com/api2/web/index.php/?r=api\\\", {\\n        headers: {\\n            \\\"Referer\\\": \\\"https://apk.jqkan.com/\\\",\\n            \\\"User-Agent\\\":\\\"laobai_tv/1.1.5(Mozilla/5.0 (Linux; Android 11; Mi 10 Pro Build/RKQ1.200826.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/92.0.4515.131 Mobile Safari/537.36)\\\",\\n            \\\"content-type\\\":\\\"application/x-www-form-urlencoded\\\"\\n        },\\n        body: \\\"params=\\\" + data+\\\"&version=1.1.5\\\",\\n        method: 'POST'\\n    });\\n    let json = JSON.parse(html);\\n    log(json)\\n    //log(json.data.url)\\n    return json.data.url + \\\";{User-Agent@laobai_tv/1.1.5&&Referer@https://apk-lb.iiszg.com/}#isMusic=true#\\\"\\n})\"}]",
+    "icon": "https://s1.ax1x.com/2022/04/19/L0gPIK.png",
+    "proxy": ""
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+]
